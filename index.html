@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Study Tracker</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+
+  <body>
+    <header class="page-header">
+      <div class="logo">
+        <span class="logo-icon">
+          <i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>
+        </span>
+        <span>Study Tracker</span>
+        <span id="app-version">1.0.0</span>
+      </div>
+      <p class="header-note">Small steps. Lasting progress.</p>
+    </header>
+
+    <main class="dashboard">
+      <div class="left-column">
+        <section class="timer" aria-labelledby="timer-heading">
+          <div class="card-heading">
+            <h1 id="timer-heading">What are we learning today?</h1>
+            <p>Choose your activity and make time to focus.</p>
+          </div>
+
+          <div class="activity-field">
+            <label for="subjects">Activity</label>
+            <select name="subject" id="subjects">
+              <option value="" disabled selected>Add an activity to begin</option>
+            </select>
+          </div>
+
+          <div class="timer-clock">
+            <span class="session-label">Focus session</span>
+            <div class="timer_time" role="timer" aria-label="Time remaining">25:00</div>
+          </div>
+
+          <div class="timer_buttons">
+            <button id="btn_start" class="button start" type="button">
+              <i class="fa-solid fa-play" aria-hidden="true"></i>
+              <span>Start</span>
+            </button>
+            <button id="btn_pause" class="button pause" type="button">
+              <i class="fa-solid fa-pause" aria-hidden="true"></i>
+              <span>Pause</span>
+            </button>
+            <button id="btn_reset" class="button reset" type="button">
+              <i class="fa-solid fa-arrow-rotate-left" aria-hidden="true"></i>
+              <span>Reset</span>
+            </button>
+          </div>
+        </section>
+
+        <section class="activity_block" aria-labelledby="activities-heading">
+          <div class="card-heading">
+            <h2 id="activities-heading">Your activities</h2>
+            <p>A little progress in everything you enjoy.</p>
+          </div>
+
+          <div class="hide" id="empty_box">
+            <span class="empty-icon">
+              <i class="fa-solid fa-list-check" aria-hidden="true"></i>
+            </span>
+            <p class="empty-title">No activities yet</p>
+            <p class="empty-description">Add your first activity to start tracking.</p>
+          </div>
+
+          <ul id="activity_list" aria-label="Your activities"></ul>
+
+          <button id="add_subject" type="button">
+            <i class="fa-solid fa-plus" aria-hidden="true"></i>
+            <span>Add activity</span>
+          </button>
+        </section>
+      </div>
+
+      <div class="right-column">
+        <section id="study_calendar_container" aria-label="Study calendar">
+          <div class="calendar_header">
+            <div class="calendar-heading">
+              <span class="eyebrow">Learning calendar</span>
+              <div id="calendar_date">Calendar</div>
+            </div>
+            <div class="calendar_nav_block">
+              <button id="prev_month" type="button" aria-label="Previous month">
+                <i class="fa-solid fa-angle-left" aria-hidden="true"></i>
+              </button>
+              <button id="next_month" type="button" aria-label="Next month">
+                <i class="fa-solid fa-angle-right" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="calendar_days">
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+            <div>Sun</div>
+          </div>
+
+          <div id="study_calendar"></div>
+
+          <div class="calendar-legend">
+            <span class="legend-item">
+              <span class="legend-dot" aria-hidden="true"></span>
+              Study day
+            </span>
+            <span class="legend-item">
+              <span class="legend-today" aria-hidden="true"></span>
+              Today
+            </span>
+          </div>
+        </section>
+
+        <section class="statistics" aria-labelledby="statistics-heading">
+          <div class="card-heading">
+            <h2 id="statistics-heading">Study time</h2>
+            <p>Time invested in your activities.</p>
+          </div>
+
+          <ul id="study_stats" aria-label="Study time by activity"></ul>
+
+          <p class="statistics-total">
+            <span>Total time</span>
+            <span id="study_time">00:00:00</span>
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <audio id="bell" src="sounds/bell.mp3" preload="auto"></audio>
+  </body>
+</html>
