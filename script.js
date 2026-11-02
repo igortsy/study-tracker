@@ -16,7 +16,7 @@ const addSubject = document.getElementById('add_subject');
 const activityList = document.getElementById('activity_list');
 const emptyBoxMsg = document.getElementById('empty_box');
 const appStatus = document.getElementById('app_status');
-
+alert('adf')
 const TIMER_TIME = 1500;
 const STORAGE_KEYS = [
   'activities', 'studyStats', 'dailyStats',
