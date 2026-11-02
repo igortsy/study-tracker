@@ -353,9 +353,14 @@ h2 {
     color 0.18s ease;
 }
 
-.delete:hover {
+.delete:hover:not(:disabled) {
   background-color: #39282b;
   color: #f4a8a8;
+}
+
+.delete:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
 #add_subject {
@@ -560,6 +565,23 @@ h2 {
   overflow-wrap: anywhere;
 }
 
+#study_stats li > span:first-child {
+  min-width: 0;
+}
+
+.stat-time {
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.app-status {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.875rem;
+  overflow-wrap: anywhere;
+}
+
 .statistics-total {
   display: flex;
   flex-wrap: wrap;
@@ -694,5 +716,3 @@ h2 {
     transition: none;
   }
 }
-
-

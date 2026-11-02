@@ -45,19 +45,20 @@
           </div>
 
           <div class="timer_buttons">
-            <button id="btn_start" class="button start" type="button">
+            <button id="btn_start" class="button start" type="button" disabled>
               <i class="fa-solid fa-play" aria-hidden="true"></i>
               <span>Start</span>
             </button>
-            <button id="btn_pause" class="button pause" type="button">
+            <button id="btn_pause" class="button pause" type="button" disabled>
               <i class="fa-solid fa-pause" aria-hidden="true"></i>
               <span>Pause</span>
             </button>
-            <button id="btn_reset" class="button reset" type="button">
+            <button id="btn_reset" class="button reset" type="button" disabled>
               <i class="fa-solid fa-arrow-rotate-left" aria-hidden="true"></i>
               <span>Reset</span>
             </button>
           </div>
+          <p id="app_status" class="app-status" role="status" aria-live="polite" hidden></p>
         </section>
 
         <section class="activity_block" aria-labelledby="activities-heading">
