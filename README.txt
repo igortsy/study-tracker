@@ -1,1 +1,0 @@
-Study Tracker 1.0.0

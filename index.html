@@ -1,146 +1,48 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Study Tracker</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    />
-    <link rel="stylesheet" href="style.css" />
-    <script src="script.js" defer></script>
-  </head>
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Study Tracker</title><script src="i18n.js"></script><link rel="stylesheet" href="style.css"><script src="core.js" defer></script><script src="script.js" defer></script>
+</head>
+<body>
+<header class="page-header"><div class="logo"><span class="logo-icon" aria-hidden="true">✦</span><span>Study Tracker</span><span id="app-version">1.3.0</span></div><div class="header-tools"><p class="header-note"><span data-i18n="Small steps. Lasting progress.">Small steps. Lasting progress.</span></p><div class="preferences"><label for="language_select"><span data-i18n="Language">Language</span><select id="language_select"><option value="en" lang="en">English</option><option value="uk" lang="uk">Українська</option></select></label><label for="theme_select"><span data-i18n="Theme">Theme</span><select id="theme_select"><option value="dark" data-i18n="Dark">Dark</option><option value="light" data-i18n="Light">Light</option></select></label></div></div></header>
+<main class="dashboard">
+<div class="left-column">
+<section class="timer" aria-labelledby="timer-heading">
+<div class="timer-top"><div class="card-heading"><h1 id="timer-heading"><span data-i18n="What are we learning today?">What are we learning today?</span></h1><p><span data-i18n="Choose your activity and make time to focus.">Choose your activity and make time to focus.</span></p></div><button id="focus_mode" class="quiet-button" type="button" aria-pressed="false"><span data-i18n="Focus mode">Focus mode</span></button></div>
+<div class="activity-field"><label for="subjects"><span data-i18n="Activity">Activity</span></label><select id="subjects" disabled><option value="">Add an activity to begin</option></select></div>
+<div class="timer-clock">
+  <div id="timer_visual" class="timer-visual" data-state="ready">
+    <svg class="timer-ring" viewBox="0 0 240 240" aria-hidden="true" focusable="false">
+      <circle class="timer-ring-track" cx="120" cy="120" r="108" />
+      <circle id="timer_ring_progress" class="timer-ring-progress" cx="120" cy="120" r="108" pathLength="100" />
+    </svg>
+    <div class="timer-ring-content">
+      <span id="session_label" class="session-label"><span data-i18n="Focus session">Focus session</span></span>
+      <div class="timer_time" role="timer" aria-label="Time remaining" data-i18n-aria-label="Time remaining">25:00</div>
+      <span id="timer_state" class="timer-state"><span data-i18n="Ready to focus">Ready to focus</span></span>
+    </div>
+  </div>
+  <span id="timer_progress_text" class="timer-progress-text"><span data-i18n="0% complete">0% complete</span></span>
+</div>
+<div class="timer_buttons"><button id="btn_start" class="button start" type="button" disabled><span id="start_label"><span data-i18n="Start">Start</span></span></button><button id="btn_pause" class="button pause" type="button" disabled><span data-i18n="Pause">Pause</span></button><button id="btn_reset" class="button reset" type="button" disabled><span data-i18n="Reset">Reset</span></button></div>
+<button id="skip_break" class="quiet-button" type="button" hidden><span data-i18n="Skip break · Back to focus">Skip break · Back to focus</span></button>
+<details id="session_note_box"><summary><span data-i18n="Session note">Session note</span> <span class="muted"><span data-i18n="(optional)">(optional)</span></span></summary><label class="sr-only" for="session_note"><span data-i18n="Note for this session">Note for this session</span></label><textarea id="session_note" maxlength="500" rows="2" placeholder="What are you working on?" data-i18n-placeholder="What are you working on?"></textarea></details>
+<p class="timer-help"><span data-i18n="Reset saves your elapsed study time and starts a fresh 25-minute timer.">Reset saves your elapsed study time and starts a fresh 25-minute timer.</span></p>
+<p id="app_status" class="app-status" role="status" aria-live="polite" hidden></p>
+</section>
+<section class="goal-card" aria-labelledby="goal_heading"><div class="card-heading"><h2 id="goal_heading"><span data-i18n="Today’s goal">Today’s goal</span></h2><p id="goal_summary"><span data-i18n="0 of 120 minutes">0 of 120 minutes</span></p></div><progress id="goal_progress" max="7200" value="0" aria-label="Progress toward today’s study goal" data-i18n-aria-label="Progress toward today’s study goal"></progress><p id="goal_remaining" class="muted"></p><form id="goal_form" class="inline-form"><label for="goal_minutes"><span data-i18n="Daily goal, minutes">Daily goal, minutes</span></label><input id="goal_minutes" type="number" min="1" max="1440" step="1" value="120" required><button type="submit"><span data-i18n="Save goal">Save goal</span></button></form></section>
+<section class="activity_block" aria-labelledby="activities-heading"><div class="card-heading"><h2 id="activities-heading"><span data-i18n="Your activities">Your activities</span></h2><p><span data-i18n="A little progress in everything you enjoy.">A little progress in everything you enjoy.</span></p></div>
+<div id="empty_box"><p class="empty-title"><span data-i18n="No activities yet">No activities yet</span></p><p class="empty-description"><span data-i18n="Add your first activity to start tracking.">Add your first activity to start tracking.</span></p></div><ul id="activity_list" aria-label="Your activities" data-i18n-aria-label="Your activities"></ul><button id="add_subject" type="button"><span data-i18n="+ Add activity">+ Add activity</span></button><button id="manual_entry" class="quiet-button" type="button"><span data-i18n="+ Log a past session">+ Log a past session</span></button></section>
 
-  <body>
-    <header class="page-header">
-      <div class="logo">
-        <span class="logo-icon">
-          <i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>
-        </span>
-        <span>Study Tracker</span>
-        <span id="app-version">1.0.0</span>
-      </div>
-      <p class="header-note">Small steps. Lasting progress.</p>
-    </header>
-
-    <main class="dashboard">
-      <div class="left-column">
-        <section class="timer" aria-labelledby="timer-heading">
-          <div class="card-heading">
-            <h1 id="timer-heading">What are we learning today?</h1>
-            <p>Choose your activity and make time to focus.</p>
-          </div>
-
-          <div class="activity-field">
-            <label for="subjects">Activity</label>
-            <select name="subject" id="subjects">
-              <option value="" disabled selected>Add an activity to begin</option>
-            </select>
-          </div>
-
-          <div class="timer-clock">
-            <span class="session-label">Focus session</span>
-            <div class="timer_time" role="timer" aria-label="Time remaining">25:00</div>
-          </div>
-
-          <div class="timer_buttons">
-            <button id="btn_start" class="button start" type="button" disabled>
-              <i class="fa-solid fa-play" aria-hidden="true"></i>
-              <span>Start</span>
-            </button>
-            <button id="btn_pause" class="button pause" type="button" disabled>
-              <i class="fa-solid fa-pause" aria-hidden="true"></i>
-              <span>Pause</span>
-            </button>
-            <button id="btn_reset" class="button reset" type="button" disabled>
-              <i class="fa-solid fa-arrow-rotate-left" aria-hidden="true"></i>
-              <span>Reset</span>
-            </button>
-          </div>
-          <p id="app_status" class="app-status" role="status" aria-live="polite" hidden></p>
-        </section>
-
-        <section class="activity_block" aria-labelledby="activities-heading">
-          <div class="card-heading">
-            <h2 id="activities-heading">Your activities</h2>
-            <p>A little progress in everything you enjoy.</p>
-          </div>
-
-          <div class="hide" id="empty_box">
-            <span class="empty-icon">
-              <i class="fa-solid fa-list-check" aria-hidden="true"></i>
-            </span>
-            <p class="empty-title">No activities yet</p>
-            <p class="empty-description">Add your first activity to start tracking.</p>
-          </div>
-
-          <ul id="activity_list" aria-label="Your activities"></ul>
-
-          <button id="add_subject" type="button">
-            <i class="fa-solid fa-plus" aria-hidden="true"></i>
-            <span>Add activity</span>
-          </button>
-        </section>
-      </div>
-
-      <div class="right-column">
-        <section id="study_calendar_container" aria-label="Study calendar">
-          <div class="calendar_header">
-            <div class="calendar-heading">
-              <span class="eyebrow">Learning calendar</span>
-              <div id="calendar_date">Calendar</div>
-            </div>
-            <div class="calendar_nav_block">
-              <button id="prev_month" type="button" aria-label="Previous month">
-                <i class="fa-solid fa-angle-left" aria-hidden="true"></i>
-              </button>
-              <button id="next_month" type="button" aria-label="Next month">
-                <i class="fa-solid fa-angle-right" aria-hidden="true"></i>
-              </button>
-            </div>
-          </div>
-
-          <div class="calendar_days">
-            <div>Mon</div>
-            <div>Tue</div>
-            <div>Wed</div>
-            <div>Thu</div>
-            <div>Fri</div>
-            <div>Sat</div>
-            <div>Sun</div>
-          </div>
-
-          <div id="study_calendar"></div>
-
-          <div class="calendar-legend">
-            <span class="legend-item">
-              <span class="legend-dot" aria-hidden="true"></span>
-              Study day
-            </span>
-            <span class="legend-item">
-              <span class="legend-today" aria-hidden="true"></span>
-              Today
-            </span>
-          </div>
-        </section>
-
-        <section class="statistics" aria-labelledby="statistics-heading">
-          <div class="card-heading">
-            <h2 id="statistics-heading">Study time</h2>
-            <p>Time invested in your activities.</p>
-          </div>
-
-          <ul id="study_stats" aria-label="Study time by activity"></ul>
-
-          <p class="statistics-total">
-            <span>Total time</span>
-            <span id="study_time">00:00:00</span>
-          </p>
-        </section>
-      </div>
-    </main>
-
-    <audio id="bell" src="sounds/bell.mp3" preload="auto"></audio>
-  </body>
-</html>
+</div>
+<div class="right-column"><section id="study_calendar_container" aria-labelledby="calendar_date"><div class="calendar_header"><div class="calendar-heading"><span class="eyebrow"><span data-i18n="Learning calendar">Learning calendar</span></span><h2 id="calendar_date"><span data-i18n="Calendar">Calendar</span></h2></div><div class="calendar_nav_block"><button id="prev_month" type="button" aria-label="Previous month" data-i18n-aria-label="Previous month">‹</button><button id="next_month" type="button" aria-label="Next month" data-i18n-aria-label="Next month">›</button></div></div><div class="calendar_days" aria-hidden="true"><div><span data-i18n="Mon">Mon</span></div><div><span data-i18n="Tue">Tue</span></div><div><span data-i18n="Wed">Wed</span></div><div><span data-i18n="Thu">Thu</span></div><div><span data-i18n="Fri">Fri</span></div><div><span data-i18n="Sat">Sat</span></div><div><span data-i18n="Sun">Sun</span></div></div><div id="study_calendar" role="group" aria-label="Select a day" data-i18n-aria-label="Select a day"></div><div class="calendar-legend"><span class="heat-legend" aria-label="Darker to brighter: no study, under 30 minutes, 30 to 59 minutes, 1 to 2 hours, 2 hours or more" data-i18n-aria-label="Darker to brighter: no study, under 30 minutes, 30 to 59 minutes, 1 to 2 hours, 2 hours or more"><span><span data-i18n="Less">Less</span></span><i data-heat="0"></i><i data-heat="1"></i><i data-heat="2"></i><i data-heat="3"></i><i data-heat="4"></i><span><span data-i18n="More">More</span></span></span><span class="legend-item"><span class="legend-today" aria-hidden="true"></span><span data-i18n="Today">Today</span></span></div><div class="day-details"><div class="section-heading"><h3 id="selected_day_heading"><span data-i18n="Selected day">Selected day</span></h3><button id="today_button" class="quiet-button" type="button"><span data-i18n="Today">Today</span></button></div><ul id="day_stats" class="time-list"></ul><p id="day_empty" class="muted"><span data-i18n="No study recorded for this day.">No study recorded for this day.</span></p><p class="day-total"><span><span data-i18n="Total">Total</span></span><strong id="day_total">00:00:00</strong></p><button id="day_history" class="quiet-button" type="button"><span data-i18n="View this day’s sessions">View this day’s sessions</span></button></div></section>
+<section class="statistics" aria-labelledby="statistics-heading"><div class="card-heading"><h2 id="statistics-heading"><span data-i18n="Study time">Study time</span></h2><p><span data-i18n="Includes your current session and archived activities.">Includes your current session and archived activities.</span></p></div><ul id="study_stats" aria-label="Study time by activity" data-i18n-aria-label="Study time by activity"></ul><p class="statistics-total"><span><span data-i18n="Total time">Total time</span></span><span id="study_time">00:00:00</span></p></section><section class="backup-card" aria-labelledby="backup-heading"><div class="card-heading"><h2 id="backup-heading"><span data-i18n="Your data">Your data</span></h2><p><span data-i18n="Saved in this browser. Export a backup to keep a copy.">Saved in this browser. Export a backup to keep a copy.</span></p></div><div class="backup-actions"><button id="export_data" type="button"><span data-i18n="Export backup">Export backup</span></button><button id="import_data" type="button"><span data-i18n="Import backup">Import backup</span></button></div><input id="backup_file" type="file" accept="application/json,.json" hidden><p class="timer-help"><span data-i18n="Import replaces the data in this browser. Export a backup first.">Import replaces the data in this browser. Export a backup first.</span></p></section></div>
+<section class="analytics-card wide-card" aria-labelledby="analytics_heading"><div class="section-heading"><div class="card-heading"><h2 id="analytics_heading"><span data-i18n="Your learning, over time">Your learning, over time</span></h2><p><span data-i18n="Calendar weeks start on Monday. Breaks are excluded.">Calendar weeks start on Monday. Breaks are excluded.</span></p></div><div class="period-controls"><label class="sr-only" for="period_type"><span data-i18n="Statistics period">Statistics period</span></label><select id="period_type"><option value="week" data-i18n="Week">Week</option><option value="month" data-i18n="Month">Month</option></select><button id="period_prev" type="button" aria-label="Previous statistics period" data-i18n-aria-label="Previous statistics period">‹</button><button id="period_today" type="button"><span data-i18n="Current">Current</span></button><button id="period_next" type="button" aria-label="Next statistics period" data-i18n-aria-label="Next statistics period">›</button></div></div><h3 id="period_label"></h3><div class="period-summary"><div><span class="muted"><span data-i18n="Study time">Study time</span></span><strong id="period_total">00:00:00</strong></div><div><span class="muted"><span data-i18n="Previous full period">Previous full period</span></span><strong id="previous_total">00:00:00</strong></div><div><span class="muted"><span data-i18n="Change">Change</span></span><strong id="period_change">—</strong></div></div><div class="chart-scroll"><ol id="daily_chart" class="daily-chart" aria-label="Daily study time" data-i18n-aria-label="Daily study time"></ol></div><p id="chart_empty" class="muted" hidden><span data-i18n="No study recorded in this period.">No study recorded in this period.</span></p><h3><span data-i18n="Time by activity">Time by activity</span></h3><ul id="period_activities" class="time-list"></ul></section>
+<section class="history-card wide-card" aria-labelledby="history_heading"><div class="section-heading"><div class="card-heading"><h2 id="history_heading"><span data-i18n="Session history">Session history</span></h2><p><span data-i18n="Focus sessions, manual entries and your notes.">Focus sessions, manual entries and your notes.</span></p></div><button id="history_manual" class="quiet-button" type="button"><span data-i18n="+ Log a session">+ Log a session</span></button></div><p id="history_legacy" class="muted" hidden><span data-i18n="Earlier study totals are included in your statistics. Individual sessions were not recorded by the old version.">Earlier study totals are included in your statistics. Individual sessions were not recorded by the old version.</span></p><div class="history-filters"><label><span data-i18n="Activity">Activity</span><select id="history_activity"><option value="">All activities</option></select></label><label><span data-i18n="Date">Date</span><input id="history_date" type="date"></label><button id="history_clear" class="quiet-button" type="button"><span data-i18n="Clear filters">Clear filters</span></button></div><ul id="history_list" class="history-list"></ul><p id="history_empty" class="muted"><span data-i18n="Your next recorded session will appear here.">Your next recorded session will appear here.</span></p><div class="history-pagination"><button id="history_prev" class="quiet-button" type="button"><span data-i18n="Previous">Previous</span></button><span id="history_page" class="muted"><span data-i18n="Page 1 of 1">Page 1 of 1</span></span><button id="history_next" class="quiet-button" type="button"><span data-i18n="Next">Next</span></button></div></section>
+</main>
+<dialog id="activity_dialog" aria-labelledby="dialog_heading"><form id="activity_form"><h2 id="dialog_heading"><span data-i18n="Add activity">Add activity</span></h2><label for="activity_name"><span data-i18n="Activity name">Activity name</span></label><input id="activity_name" name="activity" type="text" minlength="2" maxlength="60" required autocomplete="off" aria-describedby="activity_error"><p id="activity_error" role="alert"></p><div class="dialog-actions"><button id="cancel_activity" type="button"><span data-i18n="Cancel">Cancel</span></button><button type="submit"><span data-i18n="Add activity">Add activity</span></button></div></form></dialog>
+<dialog id="manual_dialog" aria-labelledby="manual_heading"><form id="manual_form"><h2 id="manual_heading"><span data-i18n="Log a past session">Log a past session</span></h2><p class="muted"><span data-i18n="For study time that was not already tracked.">For study time that was not already tracked.</span></p><label for="manual_activity"><span data-i18n="Activity">Activity</span></label><select id="manual_activity" required></select><label for="manual_date"><span data-i18n="Date">Date</span></label><input id="manual_date" type="date" required><label for="manual_minutes"><span data-i18n="Duration, minutes">Duration, minutes</span></label><input id="manual_minutes" type="number" min="1" max="1440" step="1" required><label for="manual_note"><span data-i18n="Note (optional)">Note (optional)</span></label><textarea id="manual_note" maxlength="500" rows="3"></textarea><p id="manual_error" class="form-error" role="alert"></p><div class="dialog-actions"><button id="cancel_manual" type="button"><span data-i18n="Cancel">Cancel</span></button><button type="submit"><span data-i18n="Save session">Save session</span></button></div></form></dialog>
+<dialog id="note_dialog" aria-labelledby="note_heading"><form id="note_form"><h2 id="note_heading"><span data-i18n="Session note">Session note</span></h2><label for="history_note"><span data-i18n="What did you learn?">What did you learn?</span></label><textarea id="history_note" maxlength="500" rows="5"></textarea><div class="dialog-actions"><button id="cancel_note" type="button"><span data-i18n="Cancel">Cancel</span></button><button type="submit"><span data-i18n="Save note">Save note</span></button></div></form></dialog>
+<audio id="bell" src="sounds/bell.wav" preload="auto"></audio>
+</body></html>
